@@ -18,25 +18,25 @@ const ProjectCard: React.FC<{ index: number } & TProject> = ({
   sourceCodeLink,
 }) => {
   return (
-    <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
-      <Tilt
-        glareEnable
-        tiltEnable
-        tiltMaxAngleX={30}
-        tiltMaxAngleY={30}
-        glareColor="#aaa6c3"
-      >
-        <div className="bg-tertiary w-full rounded-2xl p-5 sm:w-[360px]">
-          <div className="relative h-[230px] w-full">
+    <motion.div
+      variants={fadeIn("up", "spring", index * 0.3, 0.75)}
+      className="flex"
+    >
+      <Tilt tiltMaxAngleX={15} tiltMaxAngleY={15} className="w-full">
+        <div className="bg-tertiary w-full rounded-2xl p-5 flex flex-col h-full">
+          
+          {/* Image */}
+          <div className="relative h-[200px] sm:h-[220px] w-full">
             <img
               src={image}
               alt={name}
               className="h-full w-full rounded-2xl object-cover"
             />
-            <div className="card-img_hover absolute inset-0 m-3 flex justify-end">
+
+            <div className="absolute inset-0 m-3 flex justify-end">
               <div
                 onClick={() => window.open(sourceCodeLink, "_blank")}
-                className="black-gradient flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
+                className="black-gradient flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
               >
                 <img
                   src={github}
@@ -46,17 +46,27 @@ const ProjectCard: React.FC<{ index: number } & TProject> = ({
               </div>
             </div>
           </div>
-          <div className="mt-5">
-            <h3 className="text-[20px] font-bold text-white">{name}</h3>
-            <p className="text-secondary mt-2 text-[14px]">{description}</p>
+
+          {/* Content */}
+          <div className="mt-4 flex-grow">
+            <h3 className="text-[18px] sm:text-[20px] font-bold text-white">
+              {name}
+            </h3>
+
+            <p className="text-secondary mt-2 text-[13px] sm:text-[14px] leading-relaxed">
+              {description}
+            </p>
           </div>
+
+          {/* Tags */}
           <div className="mt-4 flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <p key={tag.name} className={`text-[14px] ${tag.color}`}>
+              <p key={tag.name} className={`text-[12px] ${tag.color}`}>
                 #{tag.name}
               </p>
             ))}
           </div>
+
         </div>
       </Tilt>
     </motion.div>
@@ -68,22 +78,20 @@ const Works = () => {
     <>
       <Header useMotion={true} {...config.sections.works} />
 
-      <div className="flex w-full">
-        <motion.p
-          variants={fadeIn("", "", 0.1, 1)}
-          className="text-secondary mt-3 max-w-3xl text-[17px] leading-[30px]"
-        >
-          {config.sections.works.content}
-        </motion.p>
-      </div>
+      <motion.p
+        variants={fadeIn("", "", 0.1, 1)}
+        className="text-secondary mt-4 max-w-3xl text-[15px] sm:text-[17px] leading-[28px]"
+      >
+        {config.sections.works.content}
+      </motion.p>
 
-      <div className="mt-20 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
+          <ProjectCard key={index} index={index} {...project} />
         ))}
       </div>
     </>
   );
 };
 
-export default SectionWrapper(Works, "");
+export default SectionWrapper(Works, "work");

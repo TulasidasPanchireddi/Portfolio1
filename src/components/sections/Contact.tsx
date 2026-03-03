@@ -22,7 +22,6 @@ const Contact = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    // Remove error automatically when typing correct email
     if (name === "email") {
       setError("");
     }
@@ -49,22 +48,24 @@ const Contact = () => {
     });
 
     if (response.ok) {
-      setForm(INITIAL_STATE); // Clear form silently
+      setForm(INITIAL_STATE);
     }
   };
 
   return (
-    <div className="flex flex-col-reverse gap-10 overflow-hidden xl:mt-12 xl:flex-row">
+    <div className="flex flex-col lg:flex-row gap-10 mt-12">
+
+      {/* Form Section */}
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className="bg-black-100 flex-[0.75] rounded-2xl p-8"
+        className="w-full lg:w-1/2 bg-black-100 rounded-2xl p-6 sm:p-8"
       >
         <Header useMotion={false} {...config.contact} />
 
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mt-12 flex flex-col gap-8"
+          className="mt-8 flex flex-col gap-6"
         >
           {Object.keys(config.contact.form).map((input) => {
             const { span, placeholder } =
@@ -73,7 +74,7 @@ const Contact = () => {
 
             return (
               <label key={input} className="flex flex-col">
-                <span className="mb-4 font-medium text-white">{span}</span>
+                <span className="mb-2 font-medium text-white">{span}</span>
 
                 <Component
                   type={input === "email" ? "email" : "text"}
@@ -81,16 +82,16 @@ const Contact = () => {
                   value={form[input]}
                   onChange={handleChange}
                   placeholder={placeholder}
-                  className={`bg-tertiary placeholder:text-secondary rounded-lg px-6 py-4 font-medium text-white outline-none ${
+                  className={`bg-tertiary placeholder:text-secondary rounded-lg px-4 py-3 text-white outline-none ${
                     input === "email" && error
                       ? "border border-red-500"
                       : "border-none"
                   }`}
-                  {...(input === "message" && { rows: 7 })}
+                  {...(input === "message" && { rows: 6 })}
                 />
 
                 {input === "email" && error && (
-                  <span className="mt-2 text-sm text-red-500">{error}</span>
+                  <span className="mt-1 text-sm text-red-500">{error}</span>
                 )}
               </label>
             );
@@ -98,16 +99,17 @@ const Contact = () => {
 
           <button
             type="submit"
-            className="bg-tertiary shadow-primary w-fit rounded-xl px-8 py-3 font-bold text-white shadow-md outline-none"
+            className="bg-tertiary shadow-primary w-fit rounded-xl px-6 py-3 font-semibold text-white shadow-md hover:opacity-90 transition"
           >
             Send
           </button>
         </form>
       </motion.div>
 
+      {/* 3D Section */}
       <motion.div
         variants={slideIn("right", "tween", 0.2, 1)}
-        className="h-[350px] md:h-[550px] xl:h-auto xl:flex-1"
+        className="w-full lg:w-1/2 h-[300px] sm:h-[400px] md:h-[500px]"
       >
         <EarthCanvas />
       </motion.div>
